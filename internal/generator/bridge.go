@@ -21,7 +21,7 @@ func NewBridgeConfig(appConf *config.AppConfig, localUUID, localPrivKey, localSh
 				Port:     appConf.XrayParams.Port,
 				Protocol: "vless",
 				Settings: InboundSettings{
-					Clients: []Client{{ID: localUUID, Flow: appConf.XrayParams.Flow}},
+					Clients:    []Client{{ID: localUUID, Flow: appConf.XrayParams.Flow}},
 					Decryption: "none",
 				},
 				StreamSettings: StreamSettings{
