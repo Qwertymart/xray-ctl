@@ -4,7 +4,7 @@ sudo apt update
 
 sudo apt install golang git
 
-git clone -b dev https://github.com/Qwertymart/xray-ctl
+git clone https://github.com/Qwertymart/xray-ctl
 
 cd xray-ctl
 
@@ -19,7 +19,7 @@ sudo apt update
 
 sudo apt install golang git
 
-git clone -b dev https://github.com/Qwertymart/xray-ctl
+git clone https://github.com/Qwertymart/xray-ctl
 
 cd xray-ctl
 
