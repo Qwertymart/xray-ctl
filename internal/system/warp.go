@@ -22,18 +22,22 @@ func SetupWarp(port int) error {
 	}
 
 	execs := [][]string{
-		{"warp-cli", "registration", "new"},
-		{"warp-cli", "mode", "proxy"},
-		{"warp-cli", "proxy", "port", fmt.Sprintf("%d", port)},
-		{"warp-cli", "connect"},
-		{"warp-cli", "registration", "set-strategy", "infinite"},
-	}
+        {"bash", "-c", "yes | warp-cli registration new"},
+        {"warp-cli", "mode", "proxy"},
+        {"warp-cli", "proxy", "port", fmt.Sprintf("%d", port)},
+        {"warp-cli", "connect"},
+    }
 
-	for _, e := range execs {
-		if err := RunCommand(e[0], e[1:]...); err != nil {
-			fmt.Printf("Предупреждение при выполнении %v: %v\n", e, err)
-		}
-	}
-
-	return nil
+    for _, e := range execs {
+        var err error
+        if e[0] == "bash" {
+            err = RunCommand("bash", e[1:]...)
+        } else {
+            err = RunCommand(e[0], e[1:]...)
+        }
+        if err != nil {
+            fmt.Printf("Предупреждение при выполнении %v: %v\n", e, err)
+        }
+    }
+    return nil
 }

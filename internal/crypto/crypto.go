@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -28,26 +29,38 @@ type KeyPair struct {
 }
 
 func GenerateX25519() (*KeyPair, error) {
-	out, err := exec.Command("xray", "x25519").Output()
+
+	path := "/usr/local/bin/xray"
+
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		path = "xray"
+	}
+
+	out, err := exec.Command(path, "x25519").Output()
 	if err != nil {
-		return nil, fmt.Errorf("failed to run xray x25519: %w (make sure xray is installed)", err)
+		return nil, fmt.Errorf("failed to run xray x25519: %w", err)
 	}
 
 	lines := strings.Split(string(out), "\n")
 	keys := &KeyPair{}
 
 	for _, line := range lines {
-		line = strings.TrimSpace(line)
-		if strings.HasPrefix(line, "Private key:") {
-			keys.Private = strings.TrimSpace(strings.TrimPrefix(line, "Private key:"))
+		if strings.Contains(line, "Private key:") {
+			parts := strings.Split(line, ":")
+			if len(parts) > 1 {
+				keys.Private = strings.TrimSpace(parts[1])
+			}
 		}
-		if strings.HasPrefix(line, "Public key:") {
-			keys.Public = strings.TrimSpace(strings.TrimPrefix(line, "Public key:"))
+		if strings.Contains(line, "Public key:") {
+			parts := strings.Split(line, ":")
+			if len(parts) > 1 {
+				keys.Public = strings.TrimSpace(parts[1])
+			}
 		}
 	}
 
 	if keys.Private == "" || keys.Public == "" {
-		return nil, fmt.Errorf("failed to parse xray keys from output")
+		return nil, fmt.Errorf("failed to parse xray keys. Output was: %s", string(out))
 	}
 
 	return keys, nil
