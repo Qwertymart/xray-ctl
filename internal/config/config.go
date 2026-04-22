@@ -7,11 +7,12 @@ type AppConfig struct {
 	} `yaml:"app_settings"`
 
 	XrayParams struct {
+		Port        int      `yaml:"port"`
 		Dest        string   `yaml:"dest"`
 		ServerNames []string `yaml:"server_names"`
 		Flow        string   `yaml:"flow"`
 	} `yaml:"xray_params"`
-	
+
 	Warp struct {
 		Enabled      bool   `yaml:"enabled"`
 		Mode         string `yaml:"mode"`

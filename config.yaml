@@ -2,6 +2,7 @@ app_settings:
   update_sysctl: true
   install_warp: true
 xray_params:
+  port: 443
   dest: "amd.com:443"
   server_names: ["amd.com", "www.amd.com"]
   flow: "xtls-rprx-vision"

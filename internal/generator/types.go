@@ -21,6 +21,7 @@ type Rule struct {
 	Type        string   `json:"type"`
 	Domain      []string `json:"domain,omitempty"`
 	IP          []string `json:"ip,omitempty"`
+	Network     string   `json:"network,omitempty"`
 	OutboundTag string   `json:"outboundTag"`
 }
 
