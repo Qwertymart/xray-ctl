@@ -1,0 +1,24 @@
+app_settings:
+  update_sysctl: true
+  install_warp: true
+xray_params:
+  dest: "amd.com:443"
+  server_names: ["amd.com", "www.amd.com"]
+  flow: "xtls-rprx-vision"
+warp:
+  enabled: true
+  mode: "socks5"
+  port: 4000
+  # Если true, то все исходящие соединения идут через WARP.
+  full_tunnel: false 
+  routing_rules:
+    domains:
+      - "geosite:google"
+      - "geosite:youtube"
+      - "domain:google.com"
+      - "domain:googleapis.com"
+      - "domain:gstatic.com"
+      - "domain:googlevideo.com"
+      - "domain:googleusercontent.com"
+    ips:
+      - "geoip:google"
