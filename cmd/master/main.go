@@ -17,9 +17,9 @@ func main() {
 		log.Fatal("Этот скрипт должен быть запущен от имени root")
 	}
 
-	fmt.Println("=== Запуск установки Xray Master Node ===")
+	fmt.Println("Запуск установки Xray Master Node")
 
-	appConf, err := config.LoadConfig("config.yaml")
+	appConf, err := config.LoadConfig("config_master.yaml")
 	if err != nil {
 		log.Fatalf("Ошибка загрузки config.yaml: %v", err)
 	}
@@ -66,9 +66,9 @@ func main() {
 }
 
 func printSummary(appConf *config.AppConfig, ip, uuid, pubKey, sid string) {
-	fmt.Println("\n" + strings.Repeat("=", 60))
-	fmt.Println("УСТАНОВКА ЗАВЕРШЕНА УСПЕШНО")
-	fmt.Println(strings.Repeat("=", 60))
+	fmt.Println("\n" + strings.Repeat("-", 60))
+	fmt.Println("Установка завершена")
+	fmt.Println(strings.Repeat("-", 60))
 
 	fmt.Printf("Внешний IP:  %s\n", ip)
 	fmt.Printf("UUID:        %s\n", uuid)
@@ -76,11 +76,8 @@ func printSummary(appConf *config.AppConfig, ip, uuid, pubKey, sid string) {
 	fmt.Printf("Short ID:    %s\n", sid)
 
 	fmt.Println(strings.Repeat("-", 60))
-	fmt.Println("ССЫЛКА ДЛЯ КЛИЕНТА:")
+	fmt.Println("Ссылка для клиента:")
 
-	vlessLink := generator.GenerateVlessLink(appConf, ip, uuid, pubKey, sid, "Master-Node")
+	vlessLink := generator.GenerateVlessLink(appConf, ip, uuid, pubKey, sid, "sisuliki_master")
 	fmt.Printf("\n%s\n\n", vlessLink)
-
-	fmt.Println(strings.Repeat("=", 60))
-	fmt.Println("Используйте эти данные для настройки Bridge-сервера.")
 }
