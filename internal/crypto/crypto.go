@@ -29,9 +29,7 @@ type KeyPair struct {
 }
 
 func GenerateX25519() (*KeyPair, error) {
-
 	path := "/usr/local/bin/xray"
-
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		path = "xray"
 	}
@@ -45,22 +43,28 @@ func GenerateX25519() (*KeyPair, error) {
 	keys := &KeyPair{}
 
 	for _, line := range lines {
-		if strings.Contains(line, "Private key:") {
-			parts := strings.Split(line, ":")
-			if len(parts) > 1 {
-				keys.Private = strings.TrimSpace(parts[1])
-			}
+		line = strings.TrimSpace(line)
+		if line == "" {
+			continue
 		}
-		if strings.Contains(line, "Public key:") {
-			parts := strings.Split(line, ":")
-			if len(parts) > 1 {
-				keys.Public = strings.TrimSpace(parts[1])
-			}
+
+		parts := strings.SplitN(line, ":", 2)
+		if len(parts) < 2 {
+			continue
+		}
+
+		key := strings.TrimSpace(parts[0])
+		value := strings.TrimSpace(parts[1])
+
+		if strings.Contains(key, "PrivateKey") {
+			keys.Private = value
+		} else if strings.Contains(key, "PublicKey") {
+			keys.Public = value
 		}
 	}
 
 	if keys.Private == "" || keys.Public == "" {
-		return nil, fmt.Errorf("failed to parse xray keys. Output was: %s", string(out))
+		return nil, fmt.Errorf("failed to parse xray keys. Output was:\n%s", string(out))
 	}
 
 	return keys, nil
