@@ -21,6 +21,7 @@ type Rule struct {
 	Type        string   `json:"type"`
 	Domain      []string `json:"domain,omitempty"`
 	IP          []string `json:"ip,omitempty"`
+	Network     string   `json:"network,omitempty"`
 	OutboundTag string   `json:"outboundTag"`
 }
 
@@ -51,16 +52,16 @@ type StreamSettings struct {
 }
 
 type RealitySettings struct {
-	Show        bool     `json:"show,omitempty"`
-	Dest        string   `json:"dest"`
-	Xver        int      `json:"xver"`
-	ServerNames []string `json:"serverNames"`
-	PrivateKey  string   `json:"privateKey,omitempty"`
-	PublicKey   string   `json:"publicKey,omitempty"` 
-	ShortIds    []string `json:"shortIds,omitempty"`
-	ShortId     string   `json:"shortId,omitempty"` 
-	Fingerprint string   `json:"fingerprint,omitempty"`
-	ServerName  string   `json:"serverName,omitempty"`
+    Show        bool     `json:"show,omitempty"`
+    Dest        string   `json:"dest,omitempty"`        
+    Xver        int      `json:"xver,omitempty"`        
+    ServerNames []string `json:"serverNames,omitempty"`
+    PrivateKey  string   `json:"privateKey,omitempty"`
+    PublicKey   string   `json:"publicKey,omitempty"` 
+    ShortIds    []string `json:"shortIds,omitempty"`
+    ShortId     string   `json:"shortId,omitempty"` 
+    Fingerprint string   `json:"fingerprint,omitempty"`
+    ServerName  string   `json:"serverName,omitempty"`
 }
 
 type Sniffing struct {
